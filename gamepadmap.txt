@@ -1,0 +1,11 @@
+axis:
+0: left_x_axis
+1: left_y_axis
+2: right_x_axis
+3: right_y_axis
+
+bottons:
+0: B
+1: A
+2: Y
+3: X

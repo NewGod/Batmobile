@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}
+	Bat Mobile 
+{% endblock %}
+{% block head %}
+	<script type="text/javascript" src="{{ url_for('static', filename='js/gamepad.js') }}"></script>
+{% endblock %}
+{% block body %}
+    <h1>Video Streaming Demonstration</h1>
+    <img src="{{ url_for('video_feed') }}">
+{% endblock %}
