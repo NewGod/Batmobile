@@ -13,14 +13,19 @@ var rAF = window.requestAnimationFrame ||
   window.mozRequestAnimationFrame ||
   window.webkitRequestAnimationFrame;
 
-setInterval(updateStatus(), 100)
+setInterval(updateStatus, 100);
 function connecthandler(e) {
+    addgamepad(e.gamepad);
 	console.log("Gamepad connected at index %d: %s. %d buttons, %d axes.",
     e.gamepad.index, e.gamepad.id,
     e.gamepad.buttons.length, e.gamepad.axes.length);
 }
+function addgamepad(gamepad) {
+  controllers[gamepad.index] = gamepad; 
+}
 
 function disconnecthandler(e) {
+    removegamepad(e.gamepad);
 	console.log("Gamepad disconnected from index %d: %s",
     e.gamepad.index, e.gamepad.id);
 }
@@ -37,7 +42,6 @@ function updateStatus() {
   for (j in controllers) {
     var controller = controllers[j];
     for (var i=0; i<controller.buttons.length; i++) {
-      var b = buttons[i];
       var val = controller.buttons[i];
       var pressed = val == 1.0;
       if (typeof(val) == "object") {
@@ -48,7 +52,7 @@ function updateStatus() {
     } 
 
 	  $.ajax({
-		url: "/axes",
+		url: "/gamepad_data",
 		type: "POST",
 		data: JSON.stringify({axes: controller.axes, bottons: bots}),
 		contentType: "application/json; charset=utf-8",
@@ -63,20 +67,20 @@ function scangamepads() {
   for (var i = 0; i < gamepads.length; i++) {
     if (gamepads[i]) {
       if (!(gamepads[i].index in controllers)) {
-        addgamepad(gamepads[i]);
+          controllers[gamepads[i].index] = gamepads[i];
       } else {
         controllers[gamepads[i].index] = gamepads[i];
       }
     }
   }
 }
-
+function removegamepad(gamepad) {
+  delete controllers[gamepad.index];
+}
 if (haveEvents) {
   window.addEventListener("gamepadconnected", connecthandler);
   window.addEventListener("gamepaddisconnected", disconnecthandler);
 } else if (haveWebkitEvents) {
   window.addEventListener("webkitgamepadconnected", connecthandler);
   window.addEventListener("webkitgamepaddisconnected", disconnecthandler);
-} else {
-  setInterval(scangamepads, 500);
 }
