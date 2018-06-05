@@ -60,7 +60,11 @@ function updateStatus() {
 		type: "POST",
 		data: JSON.stringify({axes: controller.axes, bottons: bots}),
 		contentType: "application/json; charset=utf-8",
-		success: function(dat) { console.log(dat); }
+		success: function(dat) { 
+            var div = document.getElementById("Message Box");
+            div.textContent += dat;
+            console.log(dat); 
+        }
 	});
 	break;
   }
