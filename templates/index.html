@@ -7,4 +7,10 @@
 {% endblock %}
 {% block body %}
     <h1>Video Streaming Demonstration</h1>
+    <img src="{{ url_for('video_feed') }}" width=50%>
+	<div>
+	<button type="button"  onclick="shoot()"> Shoot </button>
+	<button type="button"  onclick="start()"> start</button>
+	<button type="button"  onclick="end()"> end </button>
+	</div>
 {% endblock %}

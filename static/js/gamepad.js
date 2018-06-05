@@ -13,7 +13,7 @@ var rAF = window.requestAnimationFrame ||
   window.mozRequestAnimationFrame ||
   window.webkitRequestAnimationFrame;
 
-setInterval(updateStatus, 100);
+setInterval(updateStatus, 200);
 function connecthandler(e) {
     addgamepad(e.gamepad);
 	console.log("Gamepad connected at index %d: %s. %d buttons, %d axes.",
@@ -41,6 +41,7 @@ function updateStatus() {
   var bots = new Array();
   for (j in controllers) {
     var controller = controllers[j];
+	var flag = false;
     for (var i=0; i<controller.buttons.length; i++) {
       var val = controller.buttons[i];
       var pressed = val == 1.0;
@@ -49,8 +50,11 @@ function updateStatus() {
         val = val.value;
       }
 	  bots[i] = pressed;
+	  if (pressed) flag = true;
     } 
-
+	for (var i=0;i<controller.axes.length; i++) 
+		if (Math.abs(controller.axes[i])>0.05) flag = true;
+	if (flag)
 	  $.ajax({
 		url: "/gamepad_data",
 		type: "POST",
@@ -83,4 +87,25 @@ if (haveEvents) {
 } else if (haveWebkitEvents) {
   window.addEventListener("webkitgamepadconnected", connecthandler);
   window.addEventListener("webkitgamepaddisconnected", disconnecthandler);
+}
+function shoot(){
+	$.ajax({
+		url: "/shoot",
+		type: "GET", 
+		success: function(msg){console.log(msg);}
+		});	
+}
+function start(){
+	$.ajax({
+		url: "/start",
+		type: "GET", 
+		success: function(msg){console.log(msg);}
+		});	
+}
+function end(){
+	$.ajax({
+		url: "/end",
+		type: "GET", 
+		success: function(msg){console.log(msg);}
+		});	
 }
