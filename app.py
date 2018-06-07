@@ -50,14 +50,14 @@ def gamepad_data():
 	bot.axis = [u,v,axis[2],-axis[3]]
 	bot.event.set()
 	global last
-        msg = ""
+	msg = ""
 	if a and time.time()-last > 1:
 		last = time.time()
 		Camera().shoot()
 		msg = "Shoot"
 	global record
 	if x and not record:
-	    msg = "Start Shooting"
+		msg = "Start Record"
 		record = True
 		Camera().start_record()
 	elif y and record:
@@ -89,4 +89,4 @@ def end():
 	Camera().end_record()
 	return "finish"
 if __name__ == '__main__':
-	pp.run(host='0.0.0.0', threaded=True)
+	app.run(host='0.0.0.0', threaded=True)

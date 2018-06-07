@@ -6,8 +6,11 @@
 	<script type="text/javascript" src="{{ url_for('static', filename='js/gamepad.js') }}"></script>
 {% endblock %}
 {% block body %}
-    <h1>Video Streaming Demonstration</h1>
-    <img src="{{ url_for('video_feed') }}" width=80% align="middle">
+    <h1>Bat Mobile</h1>
+	<div> 
+		A: Shoot X: Start Recording Y: End Recording
+	</div>
+    <img src="{{ url_for('video_feed') }}" width=60% align="middle">
 	<div>
 	<button type="button"  onclick="shoot()"> Shoot </button>
 	<button type="button"  onclick="start()"> Start Record</button>

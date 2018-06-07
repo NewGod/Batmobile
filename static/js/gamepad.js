@@ -62,7 +62,8 @@ function updateStatus() {
 		contentType: "application/json; charset=utf-8",
 		success: function(dat) { 
             var div = document.getElementById("Message Box");
-            div.textContent += dat;
+			if (dat!="")
+            div.textContent = dat;
             console.log(dat); 
         }
 	});
